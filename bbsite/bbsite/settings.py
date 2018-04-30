@@ -25,7 +25,7 @@ SECRET_KEY = 'zs6vyv)=7*oso@4k1n*%0kmrm196#6_)ddx&9#p=2l$mk-yll4'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['billboard.andrea-gonzales.com', 'www.billboard.andrea-gonzales.com', '104.131.191.220']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'billboard.andrea-gonzales.com', 'www.billboard.andrea-gonzales.com', '104.131.191.220']
 
 
 # Application definition
