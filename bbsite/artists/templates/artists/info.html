@@ -2,15 +2,17 @@
 {% load static %}
 
 {% block content %}
+<div class="info">
   <div class="row head">
-    <h1 class="title"><a href="{{ artist.href }}" id="name">{{ artist.name }}</a></h1>
+
   </div>
   <div class="row">
-    <div class="col-md-3" id="artist-info">
+    <div class="col-md-2" id="artist-info">
+      <h1 class="title"><a href="{{ artist.href }}" id="name">{{ artist.name }}</a></h1>
       {% if artist %}
-        <br />
         <img id="artist-image" src="{{ artist.img }}"/>
         <br/>
+        <br />
         <p><b>rank:</b>    {{ artist.rank }}
           <br /><b>last week:</b>    {{ artist.last_week }}
           <br /><b>weeks on chart:</b>    {{ artist.weeks_on_chart }}
@@ -18,15 +20,21 @@
       {% else %}
           <p>No information available.</p>
       {% endif %}
+      <br />
+      <h6><a href="../">Go Back to Artists</a></h6>
     </div>
-    <div class="col-md-9">
+    <div class="col-md-3">
+      <br />
+      <h6>Gigography (list)</h6>
+      <div id="gig-list" class="scrollable"></div>
+    </div>
+    <div class="col-md-7">
+      <br />
       <h6>Artist Gigography</h6>
       <div id="map"></div>
     </div>
   </div>
-  <div class="row">
-    <h6><a href="../">Go Back to Artists</a></h6>
-  </div>
+</div>
 {% endblock %}
 
 {% block script %}

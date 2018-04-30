@@ -27,6 +27,7 @@ function initBar(config) {
     var artist_names = [];
     var weeks_on_chart = [];
     // console.log(artists[0]);
+    artists.sort((a,b) => d3.descending(a.fields.weeks_on_chart, b.fields.weeks_on_chart));
     artists.forEach(function(artist) {
       artist_names.push(artist.fields.name);
       weeks_on_chart.push(artist.fields.weeks_on_chart);
@@ -59,24 +60,68 @@ function initBar(config) {
     var bars = graph.append("g")
       .classed("bars", true);
 
+    function renderGradients(svg) {
+      let gradient = svg.append("svg:defs")
+        .append("svg:linearGradient")
+        .attr("id", "gradient")
+        .attr("x1", "100%")
+        .attr("y1", "0%")
+        .attr("x2", "0%")
+        .attr("y2", "0%")
+        .attr("spreadMethod", "pad");
+
+      gradient.append("svg:stop")
+        .attr("class", "begin")
+        .attr("offset", "0%");
+
+      gradient.append("svg:stop")
+        .attr("class", "end")
+        .attr("offset", "100%");
+    }
+
+    // For tints, calculate (255 - previous value), multiply that by 1/4, 1/2, 3/4, etc.
+    //  (the greater the factor, the lighter the tint), and add that to the previous value.
+    var tooltip = d3.select("body")
+      .append("div")
+      .style("position", "absolute")
+      .style("z-index", "10")
+      .style("visibility", "hidden")
+      .style("background", "#fff")
+      .text("a simple tooltip");
+
+
+    var r = 128
+    var g = 22;
+    var b = 22;
+    var mult = 0.02;
     // Draw the bars
     bars.selectAll('rect.bar')
       .data(artists)
       .enter()
       .append('rect')
       .classed('bar', true)
-      .attr('width', bandwidth)
+      .attr('width', bandwidth-2)
       .attr('height', function(d) {
-        console.log(d.fields.weeks_on_chart);
         return height - weeks_on_chartScale(d.fields.weeks_on_chart);
       })
       .attr('x', function(d) {
-        console.log(d);
         return nameScale(d.fields.name);
       })
       .attr('y', function(d) {
-        console.log(weeks_on_chartScale(d.fields.weeks_on_chart));
         return weeks_on_chartScale(d.fields.weeks_on_chart);
+      })
+      .attr('fill', function(d) {
+        var newColor = d3.rgb(r, g, g);
+        r = r + ((255-r)*mult);
+        g = g + ((255-g)*mult);
+        return newColor
+      }).on("mouseover", function(d){
+        tooltip.text(d.fields.name + ": " + d.fields.weeks_on_chart);
+        return tooltip.style("visibility", "visible");
+      }).on("mousemove", function() {
+        return tooltip.style("top", (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px");
+      }).on("mouseout", function(){
+        return tooltip.style("visibility", "hidden");
       });
 
     // Create a Y axis on the left side from our winner scale
@@ -97,10 +142,11 @@ function initBar(config) {
       .classed("x axis", true)
       .call(xAxis)
       .attr('transform', 'translate(0,' + height + ')')
+      .attr("font-size","6px")
       .selectAll("text")
       .attr('transform', 'rotate(-65)')
       .style('text-anchor', 'end')
-      .attr('dx', '-.8em')
+      .attr('dx', '-1em')
       .attr('dy', '.15em')
 
     graph.append("text")
@@ -108,8 +154,6 @@ function initBar(config) {
       .attr("y", 0 - (margin.top / 2))
       .attr("text-anchor", "middle")
       .text('Weeks On Chart');
-
-    console.log("rendering");
   }
 
 }

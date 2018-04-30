@@ -2,17 +2,20 @@
 {% load static %}
 
 {% block content %}
-  <div class="row">
-    <h1 id="title"><b>the billboard artist 100</b></h1>
+  <div id="title">
+    <h1><b>the billboard artist 100</b></h1>
+    <h6><i>a look into the concert history of charted billboard artists</i></h6>
+    <p style="font-size:8px">By Andrea Gonzales | Durham, NC</p>
   </div>
   <div class="row">
-    <div class="col-md-3">
+    <div class="col-md-2">
       <div id="artist-window">
-        <h6><i>Select an artist to see events</i></h6>
-        <div id="scrollable">
+        <h6><i>Select an charted artist to see events and more</i></h6>
+        <div class="scrollable">
           {% if artist_list %}
               {% for artist in artist_list %}
-                  <a class="dropdown-item" href="{% url 'info' artist.id %}">{{ artist.rank }}. {{ artist.name }}</a>
+                  <a class="scroll-info" href="{% url 'info' artist.id %}">{{ artist.rank }}. {{ artist.name }}</a>
+                  <hr>
               {% endfor %}
           {% else %}
               <a href="#">No artists are available.</a>
@@ -20,7 +23,7 @@
         </div>
       </div>
     </div>
-    <div class="col-md-9">
+    <div class="col-md-10">
       <div id="artist-bar"></div>
     </div>
   </div>
