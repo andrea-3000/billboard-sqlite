@@ -1,0 +1,32 @@
+{% extends 'artists/base.html' %}
+{% load static %}
+
+{% block content %}
+  <div class="row">
+    <h1 id="title"><b>the billboard artist 100</b></h1>
+  </div>
+  <div class="row">
+    <div class="col-md-3">
+      <div id="artist-window">
+        <h6><i>Select an artist to see events</i></h6>
+        <div id="scrollable">
+          {% if artist_list %}
+              {% for artist in artist_list %}
+                  <a class="dropdown-item" href="{% url 'info' artist.id %}">{{ artist.rank }}. {{ artist.name }}</a>
+              {% endfor %}
+          {% else %}
+              <a href="#">No artists are available.</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    <div class="col-md-9">
+      <div id="artist-bar"></div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'artists/js/home.js' %}"></script>
+    <script src="{% static 'artists/js/bar.js' %}"></script>
+{% endblock %}
