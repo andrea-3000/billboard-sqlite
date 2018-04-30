@@ -12,7 +12,12 @@ body {
 }
 
 a {
-  color: #E8453C !important
+  color: #E8453C !important;
+  /* word-break: break-all !important; */
+}
+
+.scroll-info {
+  font-size: 12px !important;
 }
 
 #title {
@@ -20,16 +25,31 @@ a {
   margin-bottom: 50px;
 }
 
-#artist-window, #artist-bar, #map, #artist-info {
+.content {
+  margin-left: 50px;
+  margin-right: 50px;
+}
+
+#artist-window, #artist-info {
   min-height: 350px;
   height: 50vh;
   width: 100%;
+  /* word-break: break-all !important; */
 }
 
-#scrollable {
-  overflow: auto;
+#map, #artist-bar, #gig-list {
+  min-height: 350px;
+  height: 60vh;
+  width: 100%;
+}
+
+.scrollable {
+  padding: 10px;
+  border-radius: 5px;
+  overflow-y: auto;
   height: 50vh;
-  background-color: white;
+  /* word-break: break-all !important; */
+  background-color: #E8D5D5;
 }
 
 #artist-image {

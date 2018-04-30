@@ -4,7 +4,7 @@ function getGigography(id) {
     var url = '//api.songkick.com/api/3.0/artists/' + id + '/gigography.json?apikey=io09K9l3ebJxmxe2&jsoncallback=?'
   $.getJSON(url, function(data) {
     var events = data.resultsPage.results.event;
-    var color = getRandomColor();
+    var gig_list = document.getElementById("gig-list")
 
     events.forEach(function(gig) {
       var displayName = gig.displayName;
@@ -13,10 +13,10 @@ function getGigography(id) {
       var latitude = gig.venue.lat;
       var longitude = gig.venue.lng;
       var coord = {lat: latitude, lng: longitude};
-      // console.log(displayName + " @ (" + latitude + "," + longitude + ")");
 
       if(latitude != null && longitude != null) {
-        var contentString = "<a href='" + gig.uri + "'>" + displayName + "</a> @ " + city;
+        var contentString = "<span class='scroll-info'><a href='" + gig.uri + "'>" + displayName + "</a> @ " + city;
+        gig_list.innerHTML += contentString + "</span><hr>";
         var infowindow = new google.maps.InfoWindow({
           content: contentString
         });

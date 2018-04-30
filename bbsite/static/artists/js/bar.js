@@ -67,11 +67,9 @@ function initBar(config) {
       .classed('bar', true)
       .attr('width', bandwidth)
       .attr('height', function(d) {
-        console.log(d.fields.weeks_on_chart);
         return height - weeks_on_chartScale(d.fields.weeks_on_chart);
       })
       .attr('x', function(d) {
-        console.log(d);
         return nameScale(d.fields.name);
       })
       .attr('y', function(d) {
